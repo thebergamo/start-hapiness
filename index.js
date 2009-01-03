@@ -6,5 +6,5 @@ let server = require('./lib/server');
 server.start((err) => {
   if (err) { throw err; }
 
-  console.log('info', 'Server running at: ' + server.info.uri);
+  console.log('info', 'Server Running At: ' + server.info.uri);
 });
