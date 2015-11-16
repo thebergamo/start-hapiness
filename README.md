@@ -2,7 +2,7 @@ Start Hapiness
 ===
 
 ## Goal
-The main idea for this project is help you to start a new Hapi + MongoDB project. In this case is a simplest scaffold project using this tools + Promises =D
+The main idea for this project is help you to start a new Hapi + MongoDB project. In this case is a simplest boilerplate project using this tools + Promises =D
 
 ## Batteries
 - **Hapi** - Web framework
