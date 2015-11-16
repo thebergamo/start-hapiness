@@ -1,0 +1,11 @@
+#! /bin/bash
+
+set -e
+
+export NODE_ENV=test;
+
+# lint the styleguide in the source
+semistandard
+
+# run the tests
+./node_modules/.bin/lab -c -t 90 -v

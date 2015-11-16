@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e 
+
+PROJ_NAME=$1
+DIR_BASE=$(pwd)
+
+if [ -z "$PROJ_NAME" ]; then
+  PROJ_NAME="awesome_api";
+fi
+
+# Creating new directory and copy all files
+cd ..
+mkdir $PROJ_NAME
+cp -r $DIR_BASE/. $PROJ_NAME
+
+# Clear unuseful files
+cd $PROJ_NAME
+rm LICENSE
+rm models/*
+rm routes/*
+rm validators/*
+rm controllers/*
+rm -R .git/
+rm -R test/*
