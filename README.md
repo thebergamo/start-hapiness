@@ -12,10 +12,10 @@ The main idea for this project is help you to start a new Hapi + MongoDB project
 - **Chai** - Assertion library
 
 ## TODO
-- [] Add Auth + jwt
-- [] Add support for others databases
-- [] Add support for loggers
-- [] Add support for packaging and deploy
+- [ ] Add Auth + jwt
+- [ ] Add support for others databases
+- [ ] Add support for loggers
+- [ ] Add support for packaging and deploy
 
 ## Run this Project
 To run this project you need have installed 
