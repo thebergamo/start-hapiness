@@ -13,16 +13,16 @@ exports.register = (server, options, next) => {
       method: 'GET',
       path: '/todo',
       config: {
-        handler: controller.index,
-        validate: Validator.index()
+        handler: controller.list,
+        validate: Validator.list()
       }
     },
     {
       method: 'GET',
       path: '/todo/{id}',
       config: {
-        handler: controller.show,
-        validate: Validator.show()
+        handler: controller.get,
+        validate: Validator.get()
       }
     },
     {
