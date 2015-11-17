@@ -4,8 +4,8 @@
 let Joi = require('joi');
 
 let TodoValidator = {
-  index: index,
-  show: show,
+  list: list,
+  get: get,
   create: create,
   update: update,
   destroy: destroy
@@ -13,11 +13,11 @@ let TodoValidator = {
 
 module.exports = TodoValidator;
 
-function index () {
+function list () {
   return {};
 }
 
-function show () {
+function get () {
   return {
     params: {
       id: Joi
