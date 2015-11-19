@@ -1,6 +1,6 @@
 'use strict';
 // load deps
-let server = require('./helpers/server');
+let server = require('./lib/server');
 
 server.start((err) => {
   if (err) { throw err; }

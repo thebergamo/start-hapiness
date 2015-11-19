@@ -11,7 +11,7 @@ let before = lab.before;
 let beforeEach = lab.beforeEach;
 
 // get the server
-let server = require('../../helpers/server');
+let server = require('../../lib/server');
 let db = server.database;
 
 describe('Routes /todo', () => {
