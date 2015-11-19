@@ -12,8 +12,8 @@
   "author": "Marcos Bérgamo <marcos@thedon.com>",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "3.0.5",
     "boom": "2.9.0",
-    "dotenv": "1.2.0",
     "hapi": "10.4.1",
     "joi": "6.9.0",
     "mongoose": "4.1.11"
