@@ -4,3 +4,4 @@
 *.swp
 .env
 node_modules/
+.azk
