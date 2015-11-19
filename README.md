@@ -16,6 +16,7 @@ The main idea for this project is help you to start a new Hapi + MongoDB project
 - [ ] Add support for others databases
 - [ ] Add support for loggers
 - [ ] Add support for packaging and deploy
+- [x] Add Azkfile.js
 
 ## Run this Project
 To run this project you need have installed 
@@ -38,11 +39,28 @@ npm run duplicate NAME
 ```
 NOTE: All models, routes, validators, controllers, tests and LICENCE will be removed. Only the bootstrap files will be stay. Git project too.
 
+## Run this Project Azk version
+Running this project using [azk][0]. Azk will just run this project in a Docker container, by this no one depencies are required, because all dependencies will be installed in the container.
+
+Azk documentation for installing is found [here][1];
+
+To run the project in Azk version:
+```sh
+azk start 
+```
+
+If you want to run tests just run:
+```sh
+azk shell -c "npm test"
+```
+
+NOTE: For duplicating this project you can just run the command above, because if you run in Azk, the project will just copied in container, not in host. No depencies are required for run the duplicate command, just a terminal.
+ 
 ### Contribute
 
-To contribute you can try to find an [issue or enchancment][0] and try to
+To contribute you can try to find an [issue or enchancment][2] and try to
 implement it. Fork the project, implement the code, make tests, add yourself
-to the [contributors][1] list and send the PR to the master branch.
+to the [contributors][3] list and send the PR to the master branch.
 
 ### Testing
 
@@ -64,5 +82,7 @@ OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
 TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 
-[0]: https://github.com/thebergamo/start-hapiness/issues?q=is%3Aopen+is%3Aenchancement+is%3Abug
-[1]: contributors.md
+[0]: http://www.azk.io
+[1]: http://docs.azk.io
+[2]: https://github.com/thebergamo/start-hapiness/issues?q=is%3Aopen+is%3Aenchancement+is%3Abug
+[3]: contributors.md
