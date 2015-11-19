@@ -1,11 +1,11 @@
 'use strict';
 
-var Controller = require('../controllers/todo');
-var Validator = require('../validators/todo');
+let Controller = require('../controllers/todo');
+let Validator = require('../validators/todo');
 
 exports.register = (server, options, next) => {
   // instantiate controller
-  var controller = new Controller(options.database);
+  let controller = new Controller(options.database);
 
   server.bind(controller);
   server.route([
