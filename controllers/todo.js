@@ -10,7 +10,7 @@ function TodoController (db) {
 module.exports = TodoController;
 
 // [GET] /todo
-TodoController.prototype.index = function (request, reply) {
+TodoController.prototype.list = function (request, reply) {
   this.model.findAsync({})
   .then((todos) => {
     reply(todos);
@@ -21,7 +21,7 @@ TodoController.prototype.index = function (request, reply) {
 };
 
 // [GET] /todo/{id}
-TodoController.prototype.show = function (request, reply) {
+TodoController.prototype.get = function (request, reply) {
   let id = request.params.id;
 
   this.model.findOneAsync({_id: id})

@@ -1,7 +1,7 @@
 {
   "name": "start-hapiness",
   "version": "1.0.0",
-  "description": "Scanfold for Hapi + MongoDB API :)",
+  "description": "Boilerplate for Hapi + MongoDB API :)",
   "main": "index.js",
   "scripts": {
     "test": "scripts/test",
