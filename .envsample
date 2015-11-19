@@ -1,4 +1,0 @@
-SERVER_HOST=localhost
-SERVER_PORT=8000
-DB_URI=mongodb://localhost:27017/project
-DB_TEST_URI=mongodb://localhost:27017/project_test
