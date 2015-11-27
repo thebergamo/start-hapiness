@@ -4,6 +4,11 @@ Start Hapiness
 ## Goal
 The main idea for this project is help you to start a new Hapi + MongoDB project. In this case is a simplest boilerplate project using this tools + Promises =D
 
+## Inspirations
+When I start this project I look for two main repositories for insparing me to make this. [The Agendor's Hapi Sample][4] but this project was depreciated and the [rcorral][5] [project][6] correlated by Agendor.
+
+Thanks very much for this inspirations projects!
+
 ## Batteries
 - **Hapi** - Web framework
 - **MongoDB** - NoSQL Database
@@ -12,7 +17,7 @@ The main idea for this project is help you to start a new Hapi + MongoDB project
 - **Chai** - Assertion library
 
 ## TODO
-- [ ] Add Auth + jwt
+- [x] Add Auth + jwt
 - [ ] Add support for others databases
 - [ ] Add support for loggers
 - [ ] Add support for packaging and deploy
@@ -86,3 +91,6 @@ THIS SOFTWARE.
 [1]: http://docs.azk.io
 [2]: https://github.com/thebergamo/start-hapiness/issues?q=is%3Aopen+is%3Aenchancement+is%3Abug
 [3]: contributors.md
+[4]: https://github.com/agendor/sample-hapi-rest-api
+[5]: https://github.com/rcorral
+[6]: https://github.com/rcorral/hapi-restful-api-example
