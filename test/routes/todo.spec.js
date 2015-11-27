@@ -1,26 +1,28 @@
+/* global describe, beforeEach, before, it, expect, db, server */
 'use strict';
 
-// load deps
-let lab = exports.lab = require('lab').script();
-let expect = require('chai').expect;
-
-// prepare environment
-let it = lab.it;
-let describe = lab.describe;
-let before = lab.before;
-let beforeEach = lab.beforeEach;
-
-// get the server
-let server = require('../../lib/server');
-let db = server.database;
-
 describe('Routes /todo', () => {
+  let token;
   before((done) => {
-    db['database'].on('connected', () => {
-      done();
+    db.User.removeAsync({})
+    .then(() => {
+      let options = {
+        method: 'POST',
+        url: '/user',
+        payload: {
+          name: 'Jack Bauer',
+          username: 'jack_b',
+          email: 'jbauer@24hours.com',
+          password: '#24hoursRescuePresident'
+        }
+      };
+
+      server.inject(options, (response) => {
+        token = response.result.token;
+        done();
+      });
     });
   });
-
   describe('GET /todo', () => {
     beforeEach((done) => {
       db.Todo.removeAsync({})
@@ -28,6 +30,7 @@ describe('Routes /todo', () => {
         let options = {
           method: 'POST',
           url: '/todo',
+          headers: {'Authorization': 'Bearer ' + token},
           payload: {}
         };
 
@@ -42,7 +45,12 @@ describe('Routes /todo', () => {
 
     it('return 200 HTTP status code', (done) => {
       db.Todo.remove(() => {
-        let options = {method: 'GET', url: '/todo'};
+        let options = {
+          method: 'GET',
+          url: '/todo',
+          headers: {'Authorization': 'Bearer ' + token}
+        };
+
         server.inject(options, (response) => {
           expect(response).to.have.property('statusCode', 200);
           done();
@@ -52,7 +60,11 @@ describe('Routes /todo', () => {
 
     it('returns an empty array when todo is empty', (done) => {
       db.Todo.remove(() => {
-        let options = {method: 'GET', url: '/todo'};
+        let options = {
+          method: 'GET',
+          url: '/todo',
+          headers: {'Authorization': 'Bearer ' + token}
+        };
         server.inject(options, (response) => {
           expect(response).to.have.property('result');
           expect(response.result).to.have.length.least(0);
@@ -62,13 +74,18 @@ describe('Routes /todo', () => {
     });
 
     it('return 10 todo at a time', (done) => {
-      let options = {method: 'GET', url: '/todo'};
+      let options = {
+        method: 'GET',
+        url: '/todo',
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('result');
         expect(response.result).to.have.length.least(10);
         for (let i = 0; i < 10; i++) {
           let todo = response.result[i];
-          expect(todo).to.have.property('name', 'TODO Task' + i);
+          expect(todo).to.have.property('name');
+          expect(todo.name).to.contain('TODO Task');
           expect(todo).to.have.property('checked', false);
         }
         done();
@@ -87,7 +104,8 @@ describe('Routes /todo', () => {
           payload: {
             name: 'TODO Tasky',
             checked: false
-          }
+          },
+          headers: {'Authorization': 'Bearer ' + token}
         };
 
         server.inject(options, (response) => {
@@ -98,7 +116,11 @@ describe('Routes /todo', () => {
     });
 
     it('returns 200 HTTP status code', (done) => {
-      let options = {method: 'GET', url: '/todo/' + todo._id};
+      let options = {
+        method: 'GET',
+        url: '/todo/' + todo._id,
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 200);
         done();
@@ -106,7 +128,11 @@ describe('Routes /todo', () => {
     });
 
     it('returns 1 todo at a time', (done) => {
-      let options = {method: 'GET', url: '/todo/' + todo._id};
+      let options = {
+        method: 'GET',
+        url: '/todo/' + todo._id,
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('result');
         expect(response.result).to.have.property('name', 'TODO Tasky');
@@ -116,7 +142,11 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code when the specified id is invalid', (done) => {
-      let options = {method: 'GET', url: '/todo/12'};
+      let options = {
+        method: 'GET',
+        url: '/todo/12',
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -129,7 +159,11 @@ describe('Routes /todo', () => {
     });
 
     it('returns 404 HTTP status code when the specified id is not found', (done) => {
-      let options = {method: 'GET', url: '/todo/561fd08d9607e21a7d39819d'};
+      let options = {
+        method: 'GET',
+        url: '/todo/561fd08d9607e21a7d39819d',
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 404);
         expect(response).to.have.property('result');
@@ -143,7 +177,11 @@ describe('Routes /todo', () => {
 
   describe('POST /todo', () => {
     it('returns 400 HTTP status code  when no body is sended', (done) => {
-      let options = {method: 'POST', url: '/todo'};
+      let options = {
+        method: 'POST',
+        url: '/todo',
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -155,7 +193,12 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code  when no `name` is send', (done) => {
-      let options = {method: 'POST', url: '/todo', payload: {}};
+      let options = {
+        method: 'POST',
+        url: '/todo',
+        payload: {},
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -167,7 +210,12 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code  when `name` is empty', (done) => {
-      let options = {method: 'POST', url: '/todo', payload: {name: ''}};
+      let options = {
+        method: 'POST',
+        url: '/todo',
+        payload: {name: ''},
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -179,7 +227,12 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code  when `name` isn\'t a string', (done) => {
-      let options = {method: 'POST', url: '/todo', payload: {name: 0}};
+      let options = {
+        method: 'POST',
+        url: '/todo',
+        payload: {name: 0},
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -191,7 +244,12 @@ describe('Routes /todo', () => {
     });
 
     it('return 400 HTTP status code when `name` haven\'t more than 30 chars', (done) => {
-      let options = {method: 'POST', url: '/todo', payload: {name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}};
+      let options = {
+        method: 'POST',
+        url: '/todo',
+        payload: {name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -203,7 +261,12 @@ describe('Routes /todo', () => {
     });
 
     it('returns 201 HTTP status code when all data is correct', (done) => {
-      let options = {method: 'POST', url: '/todo', payload: {name: 'Taskyet'}};
+      let options = {
+        method: 'POST',
+        url: '/todo',
+        payload: {name: 'Taskyet'},
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 201);
         expect(response).to.have.property('result');
@@ -225,7 +288,8 @@ describe('Routes /todo', () => {
           url: '/todo',
           payload: {
             name: 'TodoList'
-          }
+          },
+          headers: {'Authorization': 'Bearer ' + token}
         };
 
         server.inject(options, (response) => {
@@ -236,7 +300,12 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code when no `id` is send', (done) => {
-      let options = {method: 'PUT', url: '/todo/', payload: {}};
+      let options = {
+        method: 'PUT',
+        url: '/todo/',
+        payload: {},
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -248,7 +317,12 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code  when `name` is empty', (done) => {
-      let options = {method: 'PUT', url: '/todo/' + todo._id, payload: {name: ''}};
+      let options = {
+        method: 'PUT',
+        url: '/todo/' + todo._id,
+        payload: {name: ''},
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -260,7 +334,12 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code  when `name` isn\'t a string', (done) => {
-      let options = {method: 'PUT', url: '/todo/' + todo._id, payload: {name: 0}};
+      let options = {
+        method: 'PUT',
+        url: '/todo/' + todo._id,
+        payload: {name: 0},
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -272,7 +351,12 @@ describe('Routes /todo', () => {
     });
 
     it('return 400 HTTP status code when `name` haven\'t more than 30 chars', (done) => {
-      let options = {method: 'PUT', url: '/todo/' + todo._id, payload: {name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}};
+      let options = {
+        method: 'PUT',
+        url: '/todo/' + todo._id,
+        payload: {name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -284,7 +368,12 @@ describe('Routes /todo', () => {
     });
 
     it('returns 200 HTTP status code when all data is correct', (done) => {
-      let options = {method: 'PUT', url: '/todo/' + todo._id, payload: {name: 'Taskyet'}};
+      let options = {
+        method: 'PUT',
+        url: '/todo/' + todo._id,
+        payload: {name: 'Taskyet'},
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 200);
         expect(response).to.have.property('result');
@@ -304,6 +393,7 @@ describe('Routes /todo', () => {
         let options = {
           method: 'POST',
           url: '/todo',
+          headers: {'Authorization': 'Bearer ' + token},
           payload: {
             name: 'TaskMore',
             checked: true
@@ -318,7 +408,11 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code when no `id` is send', (done) => {
-      let options = {method: 'DELETE', url: '/todo/'};
+      let options = {
+        method: 'DELETE',
+        url: '/todo/',
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -330,7 +424,11 @@ describe('Routes /todo', () => {
     });
 
     it('returns 200 HTTP status code when record is deleted', (done) => {
-      let options = {method: 'DELETE', url: '/todo/' + todo._id};
+      let options = {
+        method: 'DELETE',
+        url: '/todo/' + todo._id,
+        headers: {'Authorization': 'Bearer ' + token}
+      };
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 200);
         expect(response).to.have.property('result');

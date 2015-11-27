@@ -10,7 +10,7 @@ let Schema = new mongoose.Schema({
     required: true
   },
   password: {
-    type: String, 
+    type: String,
     required: true
   },
   username: {
@@ -26,22 +26,41 @@ let Schema = new mongoose.Schema({
   recoveryCode: {
     type: String,
     unique: true,
-    default: shortid.generate 
+    default: shortid.generate
   }
 });
 
-Schema.pre('save', (next) => {
-  if(this.isMOdified('password')) return next();
+Schema.pre('save', function (next) {
+  let user = this;
+  if (!user.isModified('password')) return next();
 
-  this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(8), null);
+  user.password = hashPassword(user.password);
 
   return next();
 });
 
-Schema.methods.validatePassword = (requestPassword, myPassword) => {
-  return bcrypt.compareSync(requestPassword, myPassword);
+Schema.pre('findOneAndUpdate', function () {
+  let password = hashPassword(this.getUpdate().$set.password);
+
+  if (!password) {
+    return;
+  }
+
+  this.findOneAndUpdate({}, {password: password});
+});
+
+Schema.methods.validatePassword = function (requestPassword) {
+  return bcrypt.compareSync(requestPassword, this.password);
 };
 
 let UserModel = mongoose.model('User', Schema);
 
 module.exports = UserModel;
+
+function hashPassword (password) {
+  if (!password) {
+    return false;
+  }
+
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+}

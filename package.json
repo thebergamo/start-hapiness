@@ -12,17 +12,18 @@
   "author": "Marcos Bérgamo <marcos@thedon.com>",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.3.0",
     "bluebird": "3.0.5",
     "boom": "2.9.0",
     "hapi": "10.4.1",
     "hapi-auth-jwt2": "5.2.1",
     "joi": "6.9.0",
-    "mongoose": "4.1.11",
+    "mongoose": "4.2.7",
     "shortid": "2.2.4"
   },
   "devDependencies": {
     "chai": "3.3.0",
     "lab": "6.2.0",
-    "semistandard": "7.0.2"
+    "semistandard": "7.0.3"
   }
 }

@@ -6,14 +6,15 @@ let Validator = require('../validators/user');
 exports.register = (server, options, next) => {
   // instantiate controller
   let controller = new Controller(options.database);
-  
+
   server.bind(controller);
   server.route([
     {
       method: 'GET',
       path: '/user',
       config: {
-        handler.controller.list,
+        auth: false,
+        handler: controller.list,
         validate: Validator.list()
       }
     },
@@ -21,7 +22,7 @@ exports.register = (server, options, next) => {
       method: 'GET',
       path: '/user/{id}',
       config: {
-        handler.controller.get,
+        handler: controller.get,
         validate: Validator.get()
       }
     },
@@ -29,7 +30,8 @@ exports.register = (server, options, next) => {
       method: 'POST',
       path: '/user',
       config: {
-        handler.controller.create,
+        auth: false,
+        handler: controller.create,
         validate: Validator.create()
       }
     },
@@ -37,23 +39,24 @@ exports.register = (server, options, next) => {
       method: 'POST',
       path: '/user/login',
       config: {
-        handler.controller.logIn,
+        auth: false,
+        handler: controller.logIn,
         validate: Validator.logIn()
       }
     },
     {
       method: 'PUT',
-      path: '/user',
+      path: '/user/{id?}',
       config: {
-        handler.controller.update,
+        handler: controller.update,
         validate: Validator.update()
       }
     },
     {
       method: 'DELETE',
-      path: '/user',
+      path: '/user/{id?}',
       config: {
-        handler.controller.destroy,
+        handler: controller.destroy,
         validate: Validator.destroy()
       }
     }
@@ -62,7 +65,7 @@ exports.register = (server, options, next) => {
   next();
 };
 
-export.register.attributes = {
+exports.register.attributes = {
   name: 'user-route',
   version: '1.0.0'
 };

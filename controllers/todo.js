@@ -11,7 +11,9 @@ module.exports = TodoController;
 
 // [GET] /todo
 TodoController.prototype.list = function (request, reply) {
-  this.model.findAsync({})
+  let userId = request.auth.credentials.id;
+
+  this.model.findAsync({owner: userId})
   .then((todos) => {
     reply(todos);
   })
@@ -22,9 +24,10 @@ TodoController.prototype.list = function (request, reply) {
 
 // [GET] /todo/{id}
 TodoController.prototype.get = function (request, reply) {
+  let userId = request.auth.credentials.id;
   let id = request.params.id;
 
-  this.model.findOneAsync({_id: id})
+  this.model.findOneAsync({_id: id, owner: userId})
   .then((todo) => {
     if (!todo) {
       reply(Boom.notFound());
@@ -40,7 +43,10 @@ TodoController.prototype.get = function (request, reply) {
 
 // [POST] /todo
 TodoController.prototype.create = function (request, reply) {
+  let userId = request.auth.credentials.id;
   let payload = request.payload;
+
+  payload.owner = userId;
 
   this.model.createAsync(payload)
   .then((todo) => {
@@ -53,10 +59,11 @@ TodoController.prototype.create = function (request, reply) {
 
 // [PUT] /todo/{id}
 TodoController.prototype.update = function (request, reply) {
+  let userId = request.auth.credentials.id;
   let id = request.params.id;
   let payload = request.payload;
 
-  this.model.findOneAndUpdateAsync({_id: id}, payload, { new: true })
+  this.model.findOneAndUpdateAsync({_id: id, owner: userId}, payload, { new: true })
   .then((todo) => {
     reply(todo);
   })
@@ -67,9 +74,10 @@ TodoController.prototype.update = function (request, reply) {
 
 // [DELETE] /todo/{id}
 TodoController.prototype.destroy = function (request, reply) {
+  let userId = request.auth.credentials.id;
   let id = request.params.id;
 
-  this.model.removeAsync({_id: id})
+  this.model.removeAsync({_id: id, owner: userId})
   .then(() => {
     reply();
   })

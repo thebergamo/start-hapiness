@@ -30,7 +30,6 @@ function get () {
   };
 }
 
-
 function create () {
   return {
     payload: {
@@ -55,7 +54,7 @@ function create () {
         .min(6)
         .max(50)
         .trim()
-        .required() 
+        .required()
     }
   };
 }
@@ -72,11 +71,18 @@ function logIn () {
         .trim()
         .required()
     }
-  }; 
+  };
 }
 
 function update () {
   return {
+    params: {
+      id: Joi
+        .string()
+        .alphanum()
+        .regex(/^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i, '_id')
+        .required()
+    },
     payload: {
       name: Joi
         .string()
@@ -99,11 +105,19 @@ function update () {
         .min(6)
         .max(50)
         .trim()
-        .optional() 
+        .optional()
     }
   };
 }
 
 function destroy () {
-  return {};
+  return {
+    params: {
+      id: Joi
+        .string()
+        .alphanum()
+        .regex(/^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i, '_id')
+        .required()
+    }
+  };
 }

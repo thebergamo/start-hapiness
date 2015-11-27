@@ -1,5 +1,6 @@
 'use strict';
 
+let jwt = require('jsonwebtoken');
 let Boom = require('boom');
 
 function UserController (db) {
@@ -22,11 +23,11 @@ UserController.prototype.list = function (request, reply) {
 
 // [GET] /user/{id}
 UserController.prototype.get = function (request, reply) {
-  let id = request.auth.credentials.id;
+  let id = request.params.id;
 
   this.model.findOneAsync({_id: id})
   .then((user) => {
-    if(!user) {
+    if (!user) {
       reply(Boom.notFound());
       return;
     }
@@ -44,7 +45,7 @@ UserController.prototype.create = function (request, reply) {
 
   this.model.createAsync(payload)
   .then((user) => {
-    let token = getToken(user.id); 
+    let token = getToken(user.id);
 
     reply({
       token: token
@@ -59,18 +60,18 @@ UserController.prototype.create = function (request, reply) {
 UserController.prototype.logIn = function (request, reply) {
   let credentials = request.payload;
 
-  this.model.findOneAsync({email: auth.email})
+  this.model.findOneAsync({email: credentials.email})
   .then((user) => {
     if (!user) {
-      return reply(Boom.unauthorized('Email or Passowrd invalid'));
+      return reply(Boom.unauthorized('Email or Password invalid'));
     }
 
-    if(!this.model.schema.methods.validatePassword(credentials.password, user.password)) {
-      return reply(Boom.unauthorized('Email or Passowrd invalid'));
+    if (!user.validatePassword(credentials.password)) {
+      return reply(Boom.unauthorized('Email or Password invalid'));
     }
 
-    let token = getToken(user.id); 
-  
+    let token = getToken(user.id);
+
     reply({
       token: token
     });
@@ -82,10 +83,10 @@ UserController.prototype.logIn = function (request, reply) {
 
 // [PUT] /user
 UserController.prototype.update = function (request, reply) {
-  let id = request.auth.credentials.id;
+  let id = request.params.id;
   let payload = request.payload;
 
-  this.model.findOneAndUpdateAsync({_id: id}, payload)
+  this.model.findOneAndUpdateAsync({_id: id}, {$set: payload}, {new: true})
   .then((user) => {
     reply(user);
   })
@@ -110,7 +111,7 @@ UserController.prototype.destroy = function (request, reply) {
 function getToken (id) {
   let secretKey = process.env.JWT;
 
-  return = jwt.sign({
+  return jwt.sign({
     id: id
-  }, secretKey, {expiresIn: "18h"});
+  }, secretKey, {expiresIn: '18h'});
 }
