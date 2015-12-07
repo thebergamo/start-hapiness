@@ -1,11 +1,15 @@
 Start Hapiness
 ===
 
+[![Build Status](https://travis-ci.org/thebergamo/start-hapiness.svg)](https://travis-ci.org/thebergamo/start-hapiness)
+[![Coverage Status](https://coveralls.io/repos/thebergamo/start-hapiness/badge.svg?branch=master&service=github)](https://coveralls.io/github/thebergamo/start-hapiness?branch=master)
+
 ## Goal
 The main idea for this project is help you to start a new Hapi + MongoDB project. In this case is a simplest boilerplate project using this tools + Promises =D
 
 ## Inspirations
-When I start this project I look for two main repositories for insparing me to make this. [The Agendor's Hapi Sample][4] but this project was depreciated and the [rcorral][5] [project][6] correlated by Agendor.
+When I start this project I look for two main repositories for inspiring me to make this.
+[The Agendor's Hapi Sample][4] but this project was depreciated and the [rcorral][5] [project][6] correlated by Agendor.
 
 Thanks very much for this inspirations projects!
 

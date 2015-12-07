@@ -109,7 +109,7 @@ UserController.prototype.destroy = function (request, reply) {
 };
 
 function getToken (id) {
-  let secretKey = process.env.JWT;
+  let secretKey = process.env.JWT || 'stubJWT';
 
   return jwt.sign({
     id: id
