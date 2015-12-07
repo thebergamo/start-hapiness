@@ -4,6 +4,12 @@ node_js:
   - 4
   - 5
 
+env:
+  - DB_URI_TEST=mongodb://localhost:27017/start-hapiness_test
+
+services:
+  - mongodb
+
 after_script:
   - npm run cover
 
