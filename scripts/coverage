@@ -3,7 +3,9 @@
 set -e
 export NODE_ENV=test;
 
+mkdir -p ./coverage
+
 # run the tests
-./node_modules/.bin/lab -c -r lcov > ./coverage/lab.lcov
+./node_modules/.bin/lab -c -l -r lcov > ./coverage/lab.lcov
 # submit to coveralls
-cat ./coverage/merged.lcov |  ./node_modules/.bin/coveralls
+cat ./coverage/lab.lcov |  ./node_modules/.bin/coveralls
