@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "scripts/test",
+    "cover": "scritps/coverage",
     "build": "scripts/build",
     "duplicate": "scripts/duplicate",
     "start": "node index.js"
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "chai": "3.3.0",
+    "coveralls": "^2.11.4",
     "lab": "6.2.0",
     "semistandard": "7.0.3"
   }
