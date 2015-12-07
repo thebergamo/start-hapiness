@@ -8,4 +8,4 @@ export NODE_ENV=test;
 semistandard
 
 # run the tests
-./node_modules/.bin/lab -c -t 85 -v
+./node_modules/.bin/lab -c -l -t 85 -v
