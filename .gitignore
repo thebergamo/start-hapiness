@@ -5,6 +5,6 @@
 .env
 node_modules/
 .azk
-coverage
+/coverage
 tmp
 .idea
