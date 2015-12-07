@@ -19,13 +19,13 @@
     "hapi": "10.4.1",
     "hapi-auth-jwt2": "5.2.1",
     "joi": "6.9.0",
-    "jsonwebtoken": "^5.4.1",
+    "jsonwebtoken": "5.4.1",
     "mongoose": "4.2.7",
     "shortid": "2.2.4"
   },
   "devDependencies": {
     "chai": "3.3.0",
-    "coveralls": "^2.11.4",
+    "coveralls": "2.11.4",
     "lab": "6.2.0",
     "semistandard": "7.0.3"
   }
