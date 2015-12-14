@@ -1,6 +1,6 @@
 'use strict';
 // load deps
-let lab = exports.lab = require('lab').script();
+const lab = exports.lab = require('lab').script();
 global.expect = require('chai').expect;
 
 // prepare environment
