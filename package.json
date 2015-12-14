@@ -2,6 +2,7 @@
   "name": "start-hapiness",
   "version": "1.0.0",
   "description": "Boilerplate for Hapi + MongoDB API :)",
+  "repository": "https://github.com/thebergamo/start-hapiness",
   "main": "index.js",
   "scripts": {
     "test": "scripts/test",
