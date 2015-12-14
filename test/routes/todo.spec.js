@@ -6,7 +6,7 @@ describe('Routes /todo', () => {
   before((done) => {
     db.User.removeAsync({})
     .then(() => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/user',
         payload: {
@@ -27,7 +27,7 @@ describe('Routes /todo', () => {
     beforeEach((done) => {
       db.Todo.removeAsync({})
       .then(() => {
-        let options = {
+        const options = {
           method: 'POST',
           url: '/todo',
           headers: {'Authorization': 'Bearer ' + token},
@@ -45,7 +45,7 @@ describe('Routes /todo', () => {
 
     it('return 200 HTTP status code', (done) => {
       db.Todo.remove(() => {
-        let options = {
+        const options = {
           method: 'GET',
           url: '/todo',
           headers: {'Authorization': 'Bearer ' + token}
@@ -60,7 +60,7 @@ describe('Routes /todo', () => {
 
     it('returns an empty array when todo is empty', (done) => {
       db.Todo.remove(() => {
-        let options = {
+        const options = {
           method: 'GET',
           url: '/todo',
           headers: {'Authorization': 'Bearer ' + token}
@@ -74,7 +74,7 @@ describe('Routes /todo', () => {
     });
 
     it('return 10 todo at a time', (done) => {
-      let options = {
+      const options = {
         method: 'GET',
         url: '/todo',
         headers: {'Authorization': 'Bearer ' + token}
@@ -98,7 +98,7 @@ describe('Routes /todo', () => {
     before((done) => {
       db.Todo.removeAsync({})
       .then(() => {
-        let options = {
+        const options = {
           method: 'POST',
           url: '/todo',
           payload: {
@@ -116,7 +116,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 200 HTTP status code', (done) => {
-      let options = {
+      const options = {
         method: 'GET',
         url: '/todo/' + todo._id,
         headers: {'Authorization': 'Bearer ' + token}
@@ -128,7 +128,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 1 todo at a time', (done) => {
-      let options = {
+      const options = {
         method: 'GET',
         url: '/todo/' + todo._id,
         headers: {'Authorization': 'Bearer ' + token}
@@ -142,7 +142,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code when the specified id is invalid', (done) => {
-      let options = {
+      const options = {
         method: 'GET',
         url: '/todo/12',
         headers: {'Authorization': 'Bearer ' + token}
@@ -159,7 +159,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 404 HTTP status code when the specified id is not found', (done) => {
-      let options = {
+      const options = {
         method: 'GET',
         url: '/todo/561fd08d9607e21a7d39819d',
         headers: {'Authorization': 'Bearer ' + token}
@@ -177,7 +177,7 @@ describe('Routes /todo', () => {
 
   describe('POST /todo', () => {
     it('returns 400 HTTP status code  when no body is sended', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/todo',
         headers: {'Authorization': 'Bearer ' + token}
@@ -193,7 +193,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code  when no `name` is send', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/todo',
         payload: {},
@@ -210,7 +210,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code  when `name` is empty', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/todo',
         payload: {name: ''},
@@ -227,7 +227,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code  when `name` isn\'t a string', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/todo',
         payload: {name: 0},
@@ -244,7 +244,7 @@ describe('Routes /todo', () => {
     });
 
     it('return 400 HTTP status code when `name` haven\'t more than 30 chars', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/todo',
         payload: {name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
@@ -261,7 +261,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 201 HTTP status code when all data is correct', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/todo',
         payload: {name: 'Taskyet'},
@@ -283,7 +283,7 @@ describe('Routes /todo', () => {
     before((done) => {
       db.Todo.removeAsync({})
       .then(() => {
-        let options = {
+        const options = {
           method: 'POST',
           url: '/todo',
           payload: {
@@ -300,7 +300,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code when no `id` is send', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/todo/',
         payload: {},
@@ -317,7 +317,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code  when `name` is empty', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/todo/' + todo._id,
         payload: {name: ''},
@@ -334,7 +334,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code  when `name` isn\'t a string', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/todo/' + todo._id,
         payload: {name: 0},
@@ -351,7 +351,7 @@ describe('Routes /todo', () => {
     });
 
     it('return 400 HTTP status code when `name` haven\'t more than 30 chars', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/todo/' + todo._id,
         payload: {name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
@@ -368,7 +368,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 200 HTTP status code when all data is correct', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/todo/' + todo._id,
         payload: {name: 'Taskyet'},
@@ -390,7 +390,7 @@ describe('Routes /todo', () => {
     before((done) => {
       db.Todo.removeAsync({})
       .then(() => {
-        let options = {
+        const options = {
           method: 'POST',
           url: '/todo',
           headers: {'Authorization': 'Bearer ' + token},
@@ -408,7 +408,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 400 HTTP status code when no `id` is send', (done) => {
-      let options = {
+      const options = {
         method: 'DELETE',
         url: '/todo/',
         headers: {'Authorization': 'Bearer ' + token}
@@ -424,7 +424,7 @@ describe('Routes /todo', () => {
     });
 
     it('returns 200 HTTP status code when record is deleted', (done) => {
-      let options = {
+      const options = {
         method: 'DELETE',
         url: '/todo/' + todo._id,
         headers: {'Authorization': 'Bearer ' + token}

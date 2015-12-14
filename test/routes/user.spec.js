@@ -8,7 +8,7 @@ describe('Routes /user', () => {
     beforeEach((done) => {
       db.User.removeAsync({})
       .then(() => {
-        let options = {
+        const options = {
           method: 'POST',
           url: '/user',
           payload: {}
@@ -30,7 +30,7 @@ describe('Routes /user', () => {
 
     it('return 200 HTTP status code', (done) => {
       db.User.remove(() => {
-        let options = {method: 'GET', url: '/user'};
+        const options = {method: 'GET', url: '/user'};
         server.inject(options, (response) => {
           expect(response).to.have.property('statusCode', 200);
           done();
@@ -50,7 +50,7 @@ describe('Routes /user', () => {
     });
 
     it('return 5 users at a time', (done) => {
-      let options = {method: 'GET', url: '/user'};
+      const options = {method: 'GET', url: '/user'};
       server.inject(options, (response) => {
         expect(response).to.have.property('result');
         expect(response.result).to.have.length.least(5);
@@ -71,7 +71,7 @@ describe('Routes /user', () => {
     before((done) => {
       db.User.removeAsync({})
       .then(() => {
-        let options = {
+        const options = {
           method: 'POST',
           url: '/user',
           payload: {
@@ -92,7 +92,7 @@ describe('Routes /user', () => {
 
     describe('when user is not authenticated', () => {
       it('returns 401 HTTP status code', (done) => {
-        let options = {method: 'GET', url: '/user/' + userInfo.id};
+        const options = {method: 'GET', url: '/user/' + userInfo.id};
         server.inject(options, (response) => {
           expect(response).to.have.property('statusCode', 401);
           done();
@@ -102,7 +102,7 @@ describe('Routes /user', () => {
 
     describe('when user is authenticated', () => {
       it('returns 200 HTTP status code', (done) => {
-        let options = {
+        const options = {
           method: 'GET',
           url: '/user/' + userInfo.id,
           headers: {'Authorization': 'Bearer ' + token}
@@ -115,7 +115,7 @@ describe('Routes /user', () => {
       });
 
       it('returns 1 user at a time', (done) => {
-        let options = {
+        const options = {
           method: 'GET',
           url: '/user/' + userInfo.id,
           headers: {'Authorization': 'Bearer ' + token}
@@ -130,7 +130,7 @@ describe('Routes /user', () => {
       });
 
       it('return 400 HTTP status code when the specified id is invalid', (done) => {
-        let options = {
+        const options = {
           method: 'GET',
           url: '/user/12',
           headers: {'Authorization': 'Bearer ' + token}
@@ -147,7 +147,7 @@ describe('Routes /user', () => {
       });
 
       it('return 404 HTTP status code when the specified id is not found', (done) => {
-        let options = {
+        const options = {
           method: 'GET',
           url: '/user/561fd08d9607e21a7d39819d',
           headers: {'Authorization': 'Bearer ' + token}
@@ -174,7 +174,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code when no body is sended', (done) => {
-      let options = {method: 'POST', url: '/user'};
+      const options = {method: 'POST', url: '/user'};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -186,7 +186,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when no `name` is send', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {}};
+      const options = {method: 'POST', url: '/user', payload: {}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -198,7 +198,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `name` is empty', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: ''}};
+      const options = {method: 'POST', url: '/user', payload: {name: ''}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -210,7 +210,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `name` isn\'t a string', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 0}};
+      const options = {method: 'POST', url: '/user', payload: {name: 0}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -222,7 +222,7 @@ describe('Routes /user', () => {
     });
 
     it('return 400 HTTP status code when `name` haven\'t more than 30 chars', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -234,7 +234,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when no `username` is send', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos'}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos'}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -246,7 +246,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `username` is empty', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: ''}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: ''}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -258,7 +258,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `username` isn\'t a string', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 0}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 0}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -270,7 +270,7 @@ describe('Routes /user', () => {
     });
 
     it('return 400 HTTP status code when `username` haven\'t more than 20 chars', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -282,7 +282,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when no `email` is sent', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc'}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc'}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -294,7 +294,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `email` is empty', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: ''}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: ''}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -306,7 +306,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `email` isn\'t a string ', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 0}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 0}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -318,7 +318,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `email` is invalid email', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'notanemail'}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'notanemail'}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -330,7 +330,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when no `password` is sent', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br'}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br'}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -342,7 +342,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `password` is empty', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: ''}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: ''}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -354,7 +354,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `password` isn\'t a string ', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: 0}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: 0}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -366,7 +366,7 @@ describe('Routes /user', () => {
     });
 
     it('return 400 HTTP status code when `password` haven\'t least than 6 chars', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: 'aaa'}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: 'aaa'}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -378,7 +378,7 @@ describe('Routes /user', () => {
     });
 
     it('return 400 HTTP status code when `password` haven\'t more than 50 chars', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 400);
         expect(response).to.have.property('result');
@@ -390,7 +390,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 201 HTTP status code when all data is correct', (done) => {
-      let options = {method: 'POST', url: '/user', payload: {name: 'Jack B', username: 'jack_b', email: 'jack_b@24h.com', password: '123456'}};
+      const options = {method: 'POST', url: '/user', payload: {name: 'Jack B', username: 'jack_b', email: 'jack_b@24h.com', password: '123456'}};
       server.inject(options, (response) => {
         expect(response).to.have.property('statusCode', 201);
         expect(response).to.have.property('result');
@@ -406,7 +406,7 @@ describe('Routes /user', () => {
     before((done) => {
       db.User.removeAsync({})
       .then(() => {
-        let options = {
+        const options = {
           method: 'POST',
           url: '/user',
           payload: {
@@ -426,7 +426,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `name` is empty', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: ''},
@@ -443,7 +443,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `name` isn\'t a string', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 0},
@@ -460,7 +460,7 @@ describe('Routes /user', () => {
     });
 
     it('return 400 HTTP status code when `name` haven\'t more than 30 chars', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
@@ -477,7 +477,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `username` is empty', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Marcos', username: ''},
@@ -494,7 +494,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `username` isn\'t a string', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Marcos', username: 0},
@@ -511,7 +511,7 @@ describe('Routes /user', () => {
     });
 
     it('return 400 HTTP status code when `username` haven\'t more than 20 chars', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Marcos', username: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
@@ -528,7 +528,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `email` is empty', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Marcos', username: 'marc', email: ''},
@@ -545,7 +545,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `email` isn\'t a string ', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Marcos', username: 'marc', email: 0},
@@ -562,7 +562,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `email` is invalid email', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Marcos', username: 'marc', email: 'notanemail'},
@@ -579,7 +579,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `password` is empty', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: ''},
@@ -596,7 +596,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code  when `password` isn\'t a string ', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: 0},
@@ -613,7 +613,7 @@ describe('Routes /user', () => {
     });
 
     it('return 400 HTTP status code when `password` haven\'t least than 6 chars', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: 'aaa'},
@@ -630,7 +630,7 @@ describe('Routes /user', () => {
     });
 
     it('return 400 HTTP status code when `password` haven\'t more than 50 chars', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Marcos', username: 'marc', email: 'marcos@thedon.com.br', password: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
@@ -647,7 +647,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 200 HTTP status code when all data is correct', (done) => {
-      let options = {
+      const options = {
         method: 'PUT',
         url: '/user/' + userInfo.id,
         payload: {name: 'Jack B R', username: 'jack_br', email: 'jack_br@24h.com', password: '123456vv'},
@@ -669,7 +669,7 @@ describe('Routes /user', () => {
     before((done) => {
       db.User.removeAsync({})
       .then(() => {
-        let options = {
+        const options = {
           method: 'POST',
           url: '/user',
           payload: {
@@ -687,7 +687,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code when no `email` is send', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/user/login',
         payload: {}
@@ -703,7 +703,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code when no `password` is send', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/user/login',
         payload: {email: 'jack@24h.com'}
@@ -719,7 +719,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code when `email` is invalid', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/user/login',
         payload: {email: 'jack'}
@@ -735,7 +735,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 401 HTTP status code when `email` isn`t in our base', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/user/login',
         payload: {email: 'jack_b@24h.com', password: 'd'}
@@ -751,7 +751,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 401 HTTP status code when `password` is incorrect for this user', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/user/login',
         payload: {email: 'jbauer@24h.com', password: 'mmm'}
@@ -767,7 +767,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 200 HTTP status code when success login', (done) => {
-      let options = {
+      const options = {
         method: 'POST',
         url: '/user/login',
         payload: {email: 'jbauer@24hours.com', password: '#24hoursRescuePresident'}
@@ -787,7 +787,7 @@ describe('Routes /user', () => {
     before((done) => {
       db.User.removeAsync({})
       .then(() => {
-        let options = {
+        const options = {
           method: 'POST',
           url: '/user',
           payload: {
@@ -807,7 +807,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 400 HTTP status code when no `id` is send', (done) => {
-      let options = {
+      const options = {
         method: 'DELETE',
         url: '/user',
         headers: {'Authorization': 'Bearer ' + token}
@@ -823,7 +823,7 @@ describe('Routes /user', () => {
     });
 
     it('returns 200 HTTP status code when record is deleted', (done) => {
-      let options = {
+      const options = {
         method: 'DELETE',
         url: '/user/' + userInfo.id,
         headers: {'Authorization': 'Bearer ' + token}
