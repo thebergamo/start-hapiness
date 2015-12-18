@@ -20,13 +20,6 @@ Thanks very much for this inspirations projects!
 - **Lab** - BDD and Code Coverage framework
 - **Chai** - Assertion library
 
-## TODO
-- [x] Add Auth + jwt
-- [ ] Add support for others databases
-- [ ] Add support for loggers
-- [ ] Add support for packaging and deploy
-- [x] Add Azkfile.js
-
 ## Run this Project
 To run this project you need have installed 
 - **Node.js** (latest version)
