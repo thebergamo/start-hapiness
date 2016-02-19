@@ -17,6 +17,7 @@
     "bcryptjs": "2.3.0",
     "bluebird": "3.0.5",
     "boom": "2.9.0",
+    "dotenv": "^2.0.0",
     "glob": "6.0.1",
     "good": "6.4.0",
     "good-console": "5.2.0",

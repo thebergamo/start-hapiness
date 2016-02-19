@@ -12,7 +12,7 @@ exports.register = (server, options, next) => {
       reporter: require('good-file'),
       events: {ops: '*', error: '*'},
       config: {
-        path: '../logs',
+        path: '../../logs',
         rotate: 'daily'
       }
     }]
@@ -30,3 +30,4 @@ exports.register.attributes = {
   name: 'logs',
   version: '1.0.0'
 };
+

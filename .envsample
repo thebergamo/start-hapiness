@@ -1,0 +1,5 @@
+SERVER_HOST=localhost
+SERVER_PORT=8000
+DB_NAME=hapiness
+DB_HOST=localhost
+DB_PORT=27017

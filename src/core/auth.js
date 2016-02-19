@@ -3,8 +3,6 @@
 const Promise = require('bluebird');
 const jwt = require('hapi-auth-jwt2');
 
-const db = require('./database');
-
 exports.register = (server, options, next) => {
   server.register(jwt, registerAuth);
 
@@ -23,9 +21,10 @@ exports.register = (server, options, next) => {
   }
 
   function validate (decoded, request, cb) {
+    const db = server.database;
     const User = db.User;
     return new Promise((resolve) => {
-      User.findAsync({_id: decoded.id})
+      User.findById(decoded.id)
       .then((user) => {
         if (!user) {
           return cb(null, false);
@@ -41,3 +40,4 @@ exports.register.attributes = {
   name: 'auth-jwt',
   version: '1.0.0'
 };
+

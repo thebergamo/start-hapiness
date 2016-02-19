@@ -1,11 +1,45 @@
-#!/bin/bash
+#!/bin/sh
+
+# script/test: Run test suite for application. Optionally pass in a path to an
+#              individual test file to run a single test.
+
 
 set -e
 
-export NODE_ENV=test;
+cd "$(dirname "$0")/.."
 
-# lint the styleguide in the source
-semistandard
+[ -z "$DEBUG" ] || set -x
 
-# run the tests
-./node_modules/.bin/lab -c -l -t 85 -v
+if [ "$NODE_ENV" = "test" ]; then
+  # if executed and the environment is already set to `test`, then we want a
+  # clean from scratch application. This almost always means a ci environment,
+  # since we set the environment to `test` directly in `script/cibuild`.
+  scripts/setup
+else
+  # if the environment isn't set to `test`, set it to `test` and update the
+  # application to ensure all dependencies are met as well as any other things
+  # that need to be up to date, like db migrations. The environement not having
+  # already been set to `test` almost always means this is being called on it's
+  # own from a `development` environment.
+  export NODE_ENV="test"
+
+  scripts/update
+fi
+
+echo "===> Running linter..."
+
+./node_modules/semistandard/bin/cmd.js
+
+echo "===> Running tests..."
+
+if [ ! -z "$EXPORT_COVERAGE" ]; then
+  mkdir -p coverage
+
+  ./node_modules/.bin/lab -c -l -t 95 -v -r lcov > ./coverage/lab.lcov
+
+	cat ./coverage/lab.lcov | ./node_modules/coveralls/bin/coveralls.js
+
+	rm -rf ./coverage
+else
+  ./node_modules/.bin/lab -c -l -t 95 -v
+fi

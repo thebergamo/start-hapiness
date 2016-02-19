@@ -9,13 +9,14 @@ global.describe = lab.describe;
 global.before = lab.before;
 global.beforeEach = lab.beforeEach;
 
-// get the server
-global.server = require('../lib/server');
-global.db = global.server.database;
-
 global.before((done) => [
-  global.db['database'].on('connected', () => {
-    done();
+  require('../src/core/bootstrap').start()
+  .then(() => {
+    global.server = require('../src/core/server');
+    global.db = global.server.database;
+    global.db['database'].on('connected', () => {
+      done();
+    });
   })
 ]);
 
