@@ -16,11 +16,7 @@ if [ -f "Brewfile" ] && [ "$(uname -s)" = "Darwin" ]; then
   }
 fi
 
-if [ "$TRAVIS" = true ]; then
-  echo "=>> Seeing up deps…"
-  cp test/.envtest .env
-  export $(cat < .env)
-elif  [ -f ".node-version" ] && [ -z "$(nodenv version-name 2>/dev/null)" ]; then
+if  [ -f ".node-version" ] && [ -z "$(nodenv version-name 2>/dev/null)" ]; then
   echo "==> Installing Node.js…"
   nodenv install --skip-existing
 
