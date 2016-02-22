@@ -16,7 +16,9 @@ if [ -f "Brewfile" ] && [ "$(uname -s)" = "Darwin" ]; then
   }
 fi
 
-if  [ -f ".node-version" ] && [ -z "$(nodenv version-name 2>/dev/null)" ]; then
+if [ "$TRAVIS" = true ]; then
+  echo "==> Not installing Node.js - TRAVIS version"
+elif  [ -f ".node-version" ] && [ -z "$(nodenv version-name 2>/dev/null)" ]; then
   echo "==> Installing Node.js…"
   nodenv install --skip-existing
 
