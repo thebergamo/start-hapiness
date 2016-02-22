@@ -5,7 +5,7 @@ node_js:
   - 5
 
 env:
-  - DB_NAME=hapiness DB_HOST=localhost DB_PORT=27017 JWT=awesomeSecretKeyHere EXPORT_COVERAGE=1
+  - DB_NAME=hapiness DB_HOST=localhost DB_PORT=27017 JWT=awesomeSecretKeyHere
 
 services:
   - mongodb
