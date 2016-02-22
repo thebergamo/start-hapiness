@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').load();
+require('dotenv').config({silent: true});
 
 // Load deps
 const Hapi = require('hapi');
