@@ -27,6 +27,7 @@
     "hapi-boom-decorators": "1.0.2",
     "joi": "6.9.0",
     "jsonwebtoken": "5.4.1",
+    "lodash": "4.5.1",
     "mongoose": "4.2.7",
     "shortid": "2.2.4"
   },
