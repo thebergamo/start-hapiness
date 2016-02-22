@@ -11,8 +11,8 @@ global.beforeEach = lab.beforeEach;
 
 global.before((done) => [
   require('../src/core/bootstrap').start()
-  .then(() => {
-    global.server = require('../src/core/server');
+  .then((server) => {
+    global.server = server;
     global.db = global.server.database;
     global.db['database'].on('connected', () => {
       done();

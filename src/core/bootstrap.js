@@ -10,10 +10,15 @@ const Server = require('./server');
 module.exports = {start};
 
 function start () {
-  return registerCorePlugins()
+  return registerDatabase()
+  .then(registerCorePlugins())
   .then(registerModules)
   .then(startServer)
   .catch(catchError);
+}
+
+function registerDatabase () {
+  return registerToServer(require('./database'));
 }
 
 function registerCorePlugins () {
@@ -32,7 +37,7 @@ function registerModules () {
 
 function startServer () {
   if (process.env.NODE_ENV === 'test') {
-    return;
+    return Server;
   }
 
   Server.start(logStart);
@@ -79,7 +84,7 @@ function filterCoreFiles (fileName) {
   try {
     let stat = fs.statSync(path.join(__dirname, fileName));
 
-    if (stat.isFile() && fileName.match(/^[^.]/) && ['server.js', 'bootstrap.js'].indexOf(fileName) === -1) {
+    if (stat.isFile() && fileName.match(/^[^.]/) && ['server.js', 'bootstrap.js', 'database.js'].indexOf(fileName) === -1) {
       return true;
     }
 
