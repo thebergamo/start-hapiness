@@ -10,9 +10,6 @@ env:
 services:
   - mongodb
 
-after_script:
-  - npm run cover
-
 cache:
   directories:
       - node_modules
