@@ -69,9 +69,9 @@ function getDatabaseURI () {
   return url.format({
     protocol: 'mongodb',
     slashes: true,
-    port: process.env.DB_PORT,
-    hostname: process.env.DB_HOST,
-    pathname: process.env.DB_NAME
+    port: process.env.DB_PORT || 27017,
+    hostname: process.env.DB_HOST || 'localhost',
+    pathname: process.env.DB_NAME || 'project'
   });
 }
 
