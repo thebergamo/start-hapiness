@@ -2,6 +2,7 @@
 'use strict';
 
 let jwt = require('jsonwebtoken');
+const JWT = process.env.JWT || 'stubJWT';
 
 describe('Routes /user', () => {
   describe('GET /user', () => {
@@ -84,7 +85,7 @@ describe('Routes /user', () => {
 
         server.inject(options, (response) => {
           token = response.result.token;
-          userInfo = jwt.verify(token, process.env.JWT);
+          userInfo = jwt.verify(token, JWT);
           done();
         });
       });
@@ -419,7 +420,7 @@ describe('Routes /user', () => {
 
         server.inject(options, (response) => {
           token = response.result.token;
-          userInfo = jwt.verify(token, process.env.JWT);
+          userInfo = jwt.verify(token, JWT);
           done();
         });
       });
@@ -800,7 +801,7 @@ describe('Routes /user', () => {
 
         server.inject(options, (response) => {
           token = response.result.token;
-          userInfo = jwt.verify(token, process.env.JWT);
+          userInfo = jwt.verify(token, JWT);
           done();
         });
       });
