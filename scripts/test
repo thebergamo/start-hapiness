@@ -35,11 +35,11 @@ echo "===> Running tests..."
 if [ ! -z "$EXPORT_COVERAGE" ]; then
   mkdir -p coverage
 
-  ./node_modules/.bin/lab -c -l -t 85 -v -r lcov > ./coverage/lab.lcov
+  ./node_modules/.bin/lab -c -l -t 85 -v  -m 3000 -r lcov > ./coverage/lab.lcov
 
 	cat ./coverage/lab.lcov | ./node_modules/coveralls/bin/coveralls.js
 
 	rm -rf ./coverage
 else
-  ./node_modules/.bin/lab -c -l -t 85 -v
+  ./node_modules/.bin/lab -c -l -t 85 -v -m 3000
 fi

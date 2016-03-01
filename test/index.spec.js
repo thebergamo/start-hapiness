@@ -1,6 +1,7 @@
 'use strict';
 // load deps
 const lab = exports.lab = require('lab').script();
+const App = require('../src/core/bootstrap');
 global.expect = require('chai').expect;
 
 // prepare environment
@@ -9,14 +10,16 @@ global.describe = lab.describe;
 global.before = lab.before;
 global.beforeEach = lab.beforeEach;
 
-global.before((done) => [
-  require('../src/core/bootstrap').start()
-  .then((server) => {
-    global.server = server;
-    global.db = global.server.database;
-    global.db['database'].on('connected', () => {
-      done();
+global.describe('Bootstraping app', () => {
+  global.before(function (done) {
+    App.start()
+    .then((server) => {
+      global.server = server;
+      global.db = global.server.database;
+      global.db['mongoose'].on('connected', () => {
+        done();
+      });
     });
-  })
-]);
+  });
+});
 

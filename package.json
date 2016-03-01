@@ -28,7 +28,8 @@
     "joi": "6.9.0",
     "jsonwebtoken": "5.4.1",
     "lodash": "4.5.1",
-    "mongoose": "4.2.7",
+    "k7": "git@github.com:thebergamo/k7.git",
+    "k7-mongoose": "git@github.com:thebergamo/k7-mongoose.git",
     "shortid": "2.2.4"
   },
   "devDependencies": {

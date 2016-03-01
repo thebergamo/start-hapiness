@@ -3,6 +3,7 @@
 const Promise = require('bluebird');
 
 const fs = Promise.promisifyAll(require('fs'));
+const url = require('url');
 const path = require('path');
 
 const Server = require('./server');
@@ -18,7 +19,20 @@ function start () {
 }
 
 function registerDatabase () {
-  return registerToServer(require('./database'));
+  return registerToServer({
+    register: require('k7'),
+    options: {
+      connectionString: getDatabaseURI(),
+      models: ['src/**/model.js'],
+      adapter: require('k7-mongoose'),
+      events: {
+        connected: () => {
+          Server.log(['info', 'database'], 'Database connection is open!');
+        }
+      }
+    }
+  });
+  // return registerToServer(require('./database'));
 }
 
 function registerCorePlugins () {
@@ -105,4 +119,14 @@ function filterCoreDirectories (dirName) {
   } catch (err) {
     return false;
   }
+}
+
+function getDatabaseURI () {
+  return url.format({
+    protocol: 'mongodb',
+    slashes: true,
+    port: process.env.DB_PORT || 27017,
+    hostname: process.env.DB_HOST || 'localhost',
+    pathname: process.env.DB_NAME || 'project'
+  });
 }
