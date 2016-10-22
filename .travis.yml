@@ -5,13 +5,10 @@ node_js:
   - 5
 
 env:
-  - DB_TEST_URI=mongodb://localhost:27017/start-hapiness_test JWT=awesomeSecretKeyHere
+  - DB_NAME=hapiness DB_HOST=localhost DB_PORT=27017 JWT=awesomeSecretKeyHere EXPORT_COVERAGE=1
 
 services:
   - mongodb
-
-after_script:
-  - npm run cover
 
 cache:
   directories:

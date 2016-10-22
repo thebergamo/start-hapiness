@@ -1,7 +1,7 @@
 'use strict';
 
 // load deps
-let server = require('./lib/server');
+let server = require('./src/core/bootstrap');
 
 server.start((err) => {
   if (err) { throw err; }

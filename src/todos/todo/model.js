@@ -1,6 +1,8 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const Promise = require('bluebird');
+
+const mongoose = require('k7-mongoose').mongoose;
 
 const Schema = new mongoose.Schema({
   name: {
@@ -17,5 +19,5 @@ const Schema = new mongoose.Schema({
 
 const TodoModel = mongoose.model('Todo', Schema);
 
-module.exports = TodoModel;
+module.exports = Promise.promisifyAll(TodoModel);
 

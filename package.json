@@ -6,10 +6,10 @@
   "main": "index.js",
   "scripts": {
     "test": "scripts/test",
-    "cover": "scripts/coverage",
-    "build": "scripts/build",
-    "duplicate": "scripts/duplicate",
-    "start": "node index.js"
+    "bootstrap": "scripts/bootstrap",
+    "setup": "scripts/setup",
+    "update": "scripts/update",
+    "start": "scripts/server"
   },
   "author": "Marcos Bérgamo <marcos@thedon.com>",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "bcryptjs": "2.3.0",
     "bluebird": "3.0.5",
     "boom": "2.9.0",
+    "dotenv": "2.0.0",
     "glob": "6.0.1",
     "good": "6.4.0",
     "good-console": "5.2.0",
@@ -26,7 +27,9 @@
     "hapi-boom-decorators": "1.0.2",
     "joi": "6.9.0",
     "jsonwebtoken": "5.4.1",
-    "mongoose": "4.2.7",
+    "lodash": "4.5.1",
+    "k7": "1.x.x",
+    "k7-mongoose": "1.x.x",
     "shortid": "2.2.4"
   },
   "devDependencies": {

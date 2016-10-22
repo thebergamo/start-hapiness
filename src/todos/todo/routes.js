@@ -1,26 +1,25 @@
 'use strict';
 
-const Controller = require('./user-controller');
-const Validator = require('./user-schema');
+const Controller = require('./controller');
+const Validator = require('./schema');
 
 exports.register = (server, options, next) => {
   // instantiate controller
-  const controller = new Controller(options.database);
+  const controller = new Controller(server.database);
 
   server.bind(controller);
   server.route([
     {
       method: 'GET',
-      path: '/user',
+      path: '/todo',
       config: {
-        auth: false,
         handler: controller.list,
         validate: Validator.list()
       }
     },
     {
       method: 'GET',
-      path: '/user/{id}',
+      path: '/todo/{id}',
       config: {
         handler: controller.read,
         validate: Validator.read()
@@ -28,25 +27,15 @@ exports.register = (server, options, next) => {
     },
     {
       method: 'POST',
-      path: '/user',
+      path: '/todo',
       config: {
-        auth: false,
         handler: controller.create,
         validate: Validator.create()
       }
     },
     {
-      method: 'POST',
-      path: '/user/login',
-      config: {
-        auth: false,
-        handler: controller.logIn,
-        validate: Validator.logIn()
-      }
-    },
-    {
       method: 'PUT',
-      path: '/user/{id?}',
+      path: '/todo/{id?}',
       config: {
         handler: controller.update,
         validate: Validator.update()
@@ -54,7 +43,7 @@ exports.register = (server, options, next) => {
     },
     {
       method: 'DELETE',
-      path: '/user/{id?}',
+      path: '/todo/{id?}',
       config: {
         handler: controller.destroy,
         validate: Validator.destroy()
@@ -66,6 +55,6 @@ exports.register = (server, options, next) => {
 };
 
 exports.register.attributes = {
-  name: 'user-route',
+  name: 'todo-route',
   version: '1.0.0'
 };
